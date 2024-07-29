@@ -1,5 +1,7 @@
 # Create a new load balancer
 resource "aws_elb" "elb" {
+  count = var.load_balancer_type == "elb" ? 1 : 0
+
   name                        = var.elb_name
   availability_zones          = var.elb_subnets == null ? var.elb_availability_zones : null
   security_groups             = var.elb_security_groups
