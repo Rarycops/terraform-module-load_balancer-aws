@@ -37,19 +37,28 @@ output "lb_listener_forward" {
   description = "lb_listener_forward object deployed"
   value       = try(aws_lb_listener.lb_listener_forward, null)
 }
+
 output "lb_listener_redirect" {
   description = "lb_listener_redirect object deployed"
   value       = try(aws_lb_listener.lb_listener_redirect, null)
 }
+
 output "lb_listener_fixed_response" {
   description = "lb_listener_fixed_response object deployed"
   value       = try(aws_lb_listener.lb_listener_fixed_response, null)
 }
+
 output "lb_listener_authenticate_oidc" {
   description = "lb_listener_authenticate_oidc object deployed"
   value       = try(aws_lb_listener.lb_listener_authenticate_oidc, null)
 }
+
 output "lb_listener_authenticate_cognito" {
   description = "lb_listener_authenticate_cognito object deployed"
   value       = try(aws_lb_listener.lb_listener_authenticate_cognito, null)
+}
+
+output "lb_target_group" {
+  description = "lb_target_group object deployed"
+  value       = try(aws_lb_target_group.lb_target_group, null)
 }

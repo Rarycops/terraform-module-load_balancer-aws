@@ -287,6 +287,10 @@ variable "lb_listener_map" {
           arn    = string
           weight = number
         }))
+        stickiness = list(object({
+          duration = number
+          enabled  = bool
+        }))
       }))
       redirect = list(object({
         status_code = string
@@ -321,6 +325,10 @@ variable "lb_listener_forward_map" {
         target_group = list(object({
           arn    = string
           weight = number
+        }))
+        stickiness = list(object({
+          duration = number
+          enabled  = bool
         }))
       }))
     }))
@@ -446,6 +454,57 @@ variable "lb_listener_authenticate_cognito_map" {
 
 variable "lb_listener_tags" {
   description = "A map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
+  type        = map(string)
+  default     = {}
+}
+
+variable "lb_target_group_map" {
+  description = "Map for the lb target group. default value is the same as null."
+  type = map(object({
+    connection_termination                                     = bool
+    deregistration_delay                                       = string
+    target_type                                                = string
+    lambda_multi_value_headers_enabled                         = bool
+    load_balancing_algorithm_type                              = string
+    load_balancing_anomaly_mitigation                          = string
+    load_balancing_cross_zone_enabled                          = string
+    name                                                       = string
+    port                                                       = number
+    protocol                                                   = string
+    vpc_id                                                     = string
+    preserve_client_ip                                         = string
+    protocol_version                                           = string
+    proxy_protocol_v2                                          = bool
+    slow_start                                                 = number
+    target_failover                                            = string
+    enable_unhealthy_connection_termination                    = string
+    dns_failover_minimum_healthy_targets_count                 = string
+    dns_failover_minimum_healthy_targets_percentage            = string
+    unhealthy_state_routing_minimum_healthy_targets_count      = number
+    unhealthy_state_routing_minimum_healthy_targets_percentage = string
+    health_check = list(object({
+      enabled             = bool
+      healthy_threshold   = number
+      interval            = number
+      matcher             = string
+      path                = string
+      port                = string
+      protocol            = string
+      timeout             = number
+      unhealthy_threshold = number
+    }))
+    stickiness = list(object({
+      type            = string
+      cookie_duration = number
+      cookie_name     = string
+      enabled         = bool
+    }))
+  }))
+  default = {}
+}
+
+variable "lb_target_group_tags" {
+  description = "Tags for the lb target group"
   type        = map(string)
   default     = {}
 }
